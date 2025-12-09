@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "PlayerInput",
     "maps": [
         {
@@ -27,6 +28,15 @@
                     "name": "Run",
                     "type": "Button",
                     "id": "e41f466e-5bc7-471e-b07d-caac7b5cc6f2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "64821b39-b4ec-4d16-9fd4-224a3dd8a293",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -174,6 +184,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b6583c9-ac1a-4697-b30c-dc9ebc8ab2cf",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

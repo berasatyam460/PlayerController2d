@@ -84,7 +84,7 @@ public class PlayerMovementStats : ScriptableObject
    #endregion
    #region  Wall Jump
    [Header("Wall Jump Stats")]
-   public Vector2 wallJumpDirection=new Vector2(-20f,stats.jumpHeight);
+   public Vector2 wallJumpDirection=new Vector2(-20f,3.5f);
    [Range(0f,1f)]public float wallJumpBufferTime=0.125f;
    [Range(0.01f,5f)]public float wallJumpGravityOnReleaseMultiplier=1f;
    #endregion
@@ -102,13 +102,15 @@ public class PlayerMovementStats : ScriptableObject
    #endregion
 
    [Header("Debug")]
-  public bool debugShowIsGroundedBox;
-  public bool debugShowHeadBumpedBox;
-  public bool debugShowWallHitBox;
+  public bool debugShowIsGrounded;
+  public bool debugShowHeadRays;
+  public bool debugShowWallHit;
+   
+
    [Header("Jump Visualization Tool")]
    public bool showWalkJumpArc=false;
    public bool showRunJumpArc=false;
-   public bool stepOnCollision=true;
+   public bool stopOnCollision=true;
    public bool drawRight=true;
    [Range(5,100)]public int arcResolutuion=20;
    [Range(0,500)]public int visualizationStep=90;

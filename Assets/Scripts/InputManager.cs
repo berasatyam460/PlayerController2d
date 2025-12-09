@@ -13,10 +13,12 @@ public class InputManager : MonoBehaviour
    public static bool jumpIsHeld;
    public static bool jumpWasReleased;
    public static bool runIsHeld;
+   public static bool dashWasPressed;
 
    private InputAction moveAction;
    private InputAction jumpAction;
    private InputAction runAction;
+   private InputAction dashAction;
 
 
 
@@ -27,6 +29,8 @@ public class InputManager : MonoBehaviour
     moveAction=playerInput.actions["Move"];
     jumpAction=playerInput.actions["Jump"];
     runAction=playerInput.actions["Run"];
+
+    dashAction=playerInput.actions["Dash"];
    }
 
 
@@ -39,5 +43,7 @@ public class InputManager : MonoBehaviour
     jumpWasReleased=jumpAction.WasReleasedThisFrame();
 
     runIsHeld=runAction.IsPressed();
+
+    dashWasPressed =dashAction.WasPressedThisFrame();
    }
 }
