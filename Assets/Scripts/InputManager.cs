@@ -25,7 +25,8 @@ public class InputManager : MonoBehaviour
    private void  Awake()
    {
     playerInput=GetComponent<PlayerInput>();
-
+      playerInput.actions.Enable();
+      
     moveAction=playerInput.actions["Move"];
     jumpAction=playerInput.actions["Jump"];
     runAction=playerInput.actions["Run"];

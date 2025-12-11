@@ -32,7 +32,7 @@ MonoBehaviour:
   noOfJumpAirAllowed: 1
   isDoubleJumpAllowed: 0
   resetJumpOnWallSlide: 1
-  resetJumpOnMaxSlopesLand: 0
+  resetAirJumpOnMaxSlopesLand: 1
   timeForUpwardCancel: 0.027
   apexThreshold: 0.97
   apexHangTime: 0.075
@@ -54,7 +54,7 @@ MonoBehaviour:
   canJumponMaxSlopes: 0
   jumpFollowSlopesWhenHeadTouching: 1
   dashFollowSlopesWhenheadTouching: 1
-  maxSlopeAngle: 70
+  maxSlopeAngle: 50
   maxSlideSpeed: 30
   dashTime: 0.11
   dashSpeed: 40
@@ -70,9 +70,9 @@ MonoBehaviour:
   debugShowWallHit: 1
   debugShowHeadBumpBox: 1
   ExtraRayDebug: 0.25
-  debugShowDecedingSlopeRay: 0
-  debugShowSlopeNormal: 0
-  debugShowDashAngle: 0
+  debugShowDecedingSlopeRay: 1
+  debugShowSlopeNormal: 1
+  debugShowDashAngle: 1
   showWalkJumpArc: 0
   showRunJumpArc: 0
   stopOnCollision: 0
