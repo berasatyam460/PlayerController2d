@@ -24,22 +24,15 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  groundDetectionRayLength: 0.02
-  headDetectionRayLength: 0.02
-  headWidth: 0.75
-  wallDetectionRayLength: 0.125
-  wallRayHeightMultipler: 0.9
   jumpHeight: 3.5
   jumpHeightCompensationFactor: 1.054
   timeTillJumpApex: 0.35
   gravityOnReleaseMultiplier: 2
   maxFallSpeed: 26
-  noOfJumpAllowed: 2
+  noOfJumpAirAllowed: 1
   isDoubleJumpAllowed: 0
   resetJumpOnWallSlide: 1
+  resetJumpOnMaxSlopesLand: 0
   timeForUpwardCancel: 0.027
   apexThreshold: 0.97
   apexHangTime: 0.075
@@ -47,20 +40,39 @@ MonoBehaviour:
   jumpCoyoteTime: 0.1
   wallSlideSpeed: 5
   wallSlideDecelaration: 50
+  minAngleForWallSlide: 85
+  maxAngleForWallSlide: 95
   wallJumpDirection: {x: -20, y: 3.5}
   wallJumpBufferTime: 0.125
   wallJumpGravityOnReleaseMultiplier: 1
+  useHeadBumpSlide: 1
+  headBumpSlideSpeed: 13
+  HeadBumpBoxWidth: 0.3
+  HeadBumpBoxHeight: 0.1
+  maxSlopeAngleForHeadBump: 5
+  dashDirectionMatchesSlopesDirection: 1
+  canJumponMaxSlopes: 0
+  jumpFollowSlopesWhenHeadTouching: 1
+  dashFollowSlopesWhenheadTouching: 1
+  maxSlopeAngle: 70
+  maxSlideSpeed: 30
   dashTime: 0.11
   dashSpeed: 40
   timeBtwDashOnGround: 0.225
   resetDashOnWallSlide: 1
   noOfDashes: 2
   dashDiagonallyBias: 0.4
+  dashBufferTime: 0.125
   dashGravityOnReleaseMultiplier: 1
   dashTimeForUpwardCancel: 0.07
-  debugShowIsGroundedBox: 1
-  debugShowHeadBumpedBox: 1
-  debugShowWallHitBox: 1
+  debugShowIsGrounded: 1
+  debugShowHeadRays: 1
+  debugShowWallHit: 1
+  debugShowHeadBumpBox: 1
+  ExtraRayDebug: 0.25
+  debugShowDecedingSlopeRay: 0
+  debugShowSlopeNormal: 0
+  debugShowDashAngle: 0
   showWalkJumpArc: 0
   showRunJumpArc: 0
   stopOnCollision: 0

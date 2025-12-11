@@ -34,12 +34,7 @@ public class PlayerMovementStats : ScriptableObject
    #region Collision Detection
    [Header("Collision Detection")]
    public LayerMask GroundLayer;
-      public LayerMask wallLayer;
-   public float groundDetectionRayLength=0.02f;
-   public float headDetectionRayLength=0.02f;
-   [Range(0f,1f)]public float headWidth=0.75f;
-   public float wallDetectionRayLength=0.125f;
-   [Range(0.01f,2f)]public float wallRayHeightMultipler=0.9f;
+   
    #endregion
 
    #region Jump
@@ -49,7 +44,7 @@ public class PlayerMovementStats : ScriptableObject
    public float timeTillJumpApex=0.35f;
    [Range(0.01f,5f)]public float gravityOnReleaseMultiplier=2f;
    public float maxFallSpeed=26f;
-   [Range(1,5)]public int noOfJumpAllowed=2;
+   [Range(0,5)]public int noOfJumpAirAllowed=1;
 
 
    public bool isDoubleJumpAllowed=false;
@@ -58,6 +53,7 @@ public class PlayerMovementStats : ScriptableObject
    
    [Header("Reset Jump Options")]
    public bool resetJumpOnWallSlide=true;
+   public bool resetAirJumpOnMaxSlopesLand=false;
 
 
    [Header("Jump Cuts")]
@@ -80,6 +76,8 @@ public class PlayerMovementStats : ScriptableObject
    [Header("Wall Slide")]
    [Min(0.01f)]public float wallSlideSpeed=5f;
    [Range(0.25f,50f)]public float wallSlideDecelaration=50f;
+   [Range(70f,90f)]public float minAngleForWallSlide=85f;
+   [Range(90f,135f)]public float maxAngleForWallSlide=95f;
 
    #endregion
    #region  Wall Jump
@@ -87,6 +85,25 @@ public class PlayerMovementStats : ScriptableObject
    public Vector2 wallJumpDirection=new Vector2(-20f,3.5f);
    [Range(0f,1f)]public float wallJumpBufferTime=0.125f;
    [Range(0.01f,5f)]public float wallJumpGravityOnReleaseMultiplier=1f;
+   #endregion
+
+   #region head Bump Slide
+   public bool useHeadBumpSlide=true;
+   [Range(1f,50f)]public float headBumpSlideSpeed=13f;
+   [Range(0.01f,1f)]public float HeadBumpBoxWidth=0.3f;
+   [Range(0.01f,0.5f)]public float HeadBumpBoxHeight=0.1f;
+   [Range(0f,45f)]public float maxSlopeAngleForHeadBump=5f;
+
+   #endregion
+
+   #region  Slopes
+   [Header("Slopes")]
+   public bool dashDirectionMatchesSlopesDirection=true;
+   public bool canJumponMaxSlopes=false;
+   public bool jumpFollowSlopesWhenHeadTouching=true;
+   public bool dashFollowSlopesWhenheadTouching=true;
+   [Range(0f,90f)]public float maxSlopeAngle=70f;
+   [Range(1f,100f)]public float maxSlideSpeed=30f;
    #endregion
    #region Dash
    [Header("Dash")]
@@ -96,6 +113,9 @@ public class PlayerMovementStats : ScriptableObject
    public bool resetDashOnWallSlide=true;
    [Range(0,5)]public int noOfDashes=2;
    [Range (0f,5f)]public float dashDiagonallyBias=0.4f;
+   [Range(0f,1f)]public float dashBufferTime=0.125f;
+   
+   
    [Header("Dash Cancel Time")]
    [Range(0.01f,5f)]public float dashGravityOnReleaseMultiplier=1f;
    [Range(0.02f,0.3f)]public float dashTimeForUpwardCancel=0.07f;
@@ -105,6 +125,11 @@ public class PlayerMovementStats : ScriptableObject
   public bool debugShowIsGrounded;
   public bool debugShowHeadRays;
   public bool debugShowWallHit;
+  public bool debugShowHeadBumpBox;
+   [Range(0f,1f)]public float ExtraRayDebug=0.25f;
+   public bool debugShowDecedingSlopeRay;
+   public bool debugShowSlopeNormal;
+   public bool debugShowDashAngle;
    
 
    [Header("Jump Visualization Tool")]
@@ -134,21 +159,23 @@ public class PlayerMovementStats : ScriptableObject
    public float initialWallJumpVelocity{get;private set;}
    public float adjustedWallJumpHeight{get;private set;}
    
-
+   
+   //dash
+   public float dashTargetApexHeight{get;private set;}
    private void OnValidate() {
-      CalculateGravity();
+      CalculateVAlues();
 
       stats=this;
       
       }
 
    private void OnEnable() {
-      CalculateGravity();
+      CalculateVAlues();
 
       stats=this;
    }
 
-   private void CalculateGravity(){
+   private void CalculateVAlues(){
       //normal gravity
       adjustedJumpHeight=jumpHeight*jumpHeightCompensationFactor;
       gravity=-(2f*adjustedJumpHeight)/Mathf.Pow(timeTillJumpApex,2f);
@@ -158,5 +185,16 @@ public class PlayerMovementStats : ScriptableObject
       adjustedWallJumpHeight=wallJumpDirection.y*jumpHeightCompensationFactor;
       wallJumpGravity=-(2f*adjustedWallJumpHeight)/Mathf.Pow(timeTillJumpApex,2f);
       initialWallJumpVelocity=Mathf.Abs(wallJumpGravity)*timeTillJumpApex;
+
+
+      //dash
+      float step=Time.fixedDeltaTime;
+      float dashTimeRounded=Mathf.Ceil(dashTime/step)*step;
+      float dashCancelTimeRounded=Mathf.Ceil(dashTimeForUpwardCancel/step)*step;
+
+      float dashConstantPhaseHeight=dashSpeed *dashTimeRounded;
+
+      float dashCancelPhaseHeight=0.5f *dashSpeed *dashCancelTimeRounded;
+      dashTargetApexHeight=dashConstantPhaseHeight+dashCancelPhaseHeight;
    }
 }
